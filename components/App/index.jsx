@@ -18,14 +18,17 @@ class App extends React.Component {
 
     let longUrl = inputValue
     let fullUrl = baseUrl + longUrl
-    let shortUrl = fullUrl.split('.')[1]
-    // let shortUrl = Math.floor(Math.random() * (999 - 100 + 1) + 100)
+    // let shortUrl = fullUrl.split('.')[1]
+    let shortUrl = Math.floor(Math.random() * (999 - 100 + 1) + 100)
     axios.post('/', {
       longUrl: inputValue,
-      shortUrl: baseUrl + '/' + shortUrl,
+      shortUrl: baseUrl + '/' + shortUrl.toString(),
     })
 
-    this.setState({ inputValue: '', shortUrl: baseUrl + '/' + shortUrl })
+    this.setState({
+      inputValue: '',
+      shortUrl: baseUrl + '/' + shortUrl.toString(),
+    })
   }
   render() {
     const { shortUrl, longUrl, inputValue } = this.state
