@@ -1,0 +1,46 @@
+.app-component {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .app-component__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    width: 500px;
+    border-radius: 5px;
+    border: solid fuchsia 1px;
+    &:hover {
+      background-color: fuchsia;
+    }
+  }
+
+  .app-component__input {
+    margin-left: 10px;
+    height: 20px;
+    width: 200px;
+    // overflow: auto;
+  }
+
+  .app-component__button {
+    margin-left: 10px;
+    height: 20px;
+  }
+
+  // .app-component__breed-item {
+  //   display: flex;
+  //   list-style: none;
+  //   align-items: center;
+  //   background-color: beige;
+
+  //   &:hover {
+  //     background-color: fuchsia;
+  //   }
+  // }
+
+  .app-component__short-url {
+    margin-top: 20px;
+  }
+}
