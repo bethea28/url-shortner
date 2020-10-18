@@ -44,7 +44,7 @@ app.use(
 app.get('/', (_, res) => {
   res.sendFile(`${__dirname}/index.html`)
 })
-app.use('/*', routes)
+app.use('/', routes)
 
 mongoose.connect(process.env.REACT_APP_NOT_MONGO_URI, {
   useNewUrlParser: true,

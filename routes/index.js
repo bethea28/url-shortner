@@ -19,13 +19,14 @@ let Url = mongoose.model('Url', Schemas.UrlSchema)
 const redirect = async (req, res, next) => {
   let baseUrl = req.headers.host
   let path = req.baseUrl
-  let fullUrl = baseUrl + path
-  console.log('FLULL', req)
+  let fullUrl = baseUrl + req._parsedUrl.path
+  console.log('FLULL', req._parsedUrl)
   const final = await Url.find()
   let last = final.filter((a) => {
     console.log('shorturl', a.shortUrl)
     return a.shortUrl === fullUrl
   })
+  console.log('lastyl', last)
 
   let end = last[0] ? last[0].longUrl : null
   console.log('END', end)
@@ -52,8 +53,8 @@ const createShortUrl = async (req, res) => {
   })
 }
 
-artistRoutes.route('/').get(redirect)
-// artistRoutes.route('/getAllUrls').get(getAllUrls)
+artistRoutes.route('/getAllUrls').get(getAllUrls)
+artistRoutes.route('/*').get(redirect)
 artistRoutes.route('/').post(createShortUrl)
 
 module.exports = artistRoutes
