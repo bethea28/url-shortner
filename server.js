@@ -7,7 +7,7 @@ const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 const webpackConfig = require('./webpack.config.js')
 const mongoose = require('mongoose')
-const routes = require('./routes')
+const urlRoutes = require('./urlRoutes')
 const bodyParser = require('body-parser')
 const compiler = webpack(webpackConfig)
 const app = express()
@@ -44,7 +44,7 @@ app.use(
 app.get('/', (_, res) => {
   res.sendFile(`${__dirname}/index.html`)
 })
-app.use('/', routes)
+app.use('/', urlRoutes)
 
 mongoose.connect(process.env.REACT_APP_NOT_MONGO_URI, {
   useNewUrlParser: true,
