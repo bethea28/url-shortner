@@ -53,3 +53,5 @@ mongoose.connect(process.env.REACT_APP_NOT_MONGO_URI, {
 app.listen(PORT, () => {
   global.console.log(`Listening on ${PORT}`)
 })
+
+module.exports = app

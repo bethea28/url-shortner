@@ -33,7 +33,7 @@ class App extends React.Component {
   render() {
     const { shortUrl, longUrl, inputValue } = this.state
     return (
-      <div className='app-component'>
+      <section className='app-component'>
         <div className='app-component__container'>
           <p>URL TO BE SHORTENED</p>
           <input
@@ -47,8 +47,7 @@ class App extends React.Component {
           </button>
         </div>
         <h1 className='app-component__short-url'>{shortUrl}</h1>
-        {/* <a href={inputValue}>test</a> */}
-      </div>
+      </section>
     )
   }
 }
