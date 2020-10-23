@@ -14,9 +14,9 @@ const redirect = async (req, res, next) => {
   console.log('full', fullUrl)
   const final = await Url.find()
   let last = final.filter((a) => {
-    console.log('short', a.shortUrl)
     return a.shortUrl === fullUrl
   })
+  console.log('final', last)
 
   let end = last[0] ? last[0].longUrl : null
   res.redirect('https://' + end)
@@ -32,18 +32,17 @@ const createShortUrl = async (req, res, next) => {
   // console.log('req.body', req.body)
   if (!req.body.longUrl) {
     console.log('four', req.body)
-    res.status(400).send({ error: 'cant be empty' })
+    res.status(400).send({ error: 'no body' })
   } else if (req.body.longUrl ? req.body.longUrl.includes(' ') : null) {
-    // if (typeof req.body.longUrl !== 'string') {
     console.log('one')
     console.log('req.boduy', req.body)
-    res.status(400).send({ error: 'bad ass url no' })
+    res.status(400).send({ error: 'bad ass url; has spaces' })
     // throw new Error('BROKEN')
     // next()
   } else {
-    console.log('two', req.body.shortUrl)
+    console.log('two', req.body)
     await Url.findOrCreate({
-      longUrl: req.body.longurUrl,
+      longUrl: req.body.longUrl,
       shortUrl: req.body.shortUrl,
     }).then((result) => {
       console.log('three', result)
