@@ -27,21 +27,44 @@ const getAllUrls = async (req, res, next) => {
   res.send(final)
 }
 
-const createShortUrl = (req, res, next) => {
-  console.log('req.boduy', req.body)
-  // if (Object.keys(req.body.longUrl).length > 0) {
-  //   res.status(400).send('bad ass url')
-  // }
-  Url.findOrCreate({
-    longUrl: req.body.longUrl,
-    shortUrl: req.body.shortUrl,
-  }).then(function (result) {
-    let final = result.doc
-    res.json({
+const createShortUrl = async (req, res, next) => {
+  // let split = req.body ? req.body.longUrl.split(' ').join('') : null
+  // console.log('req.body', req.body)
+  if (!req.body.longUrl) {
+    console.log('four', req.body)
+    res.status(400).send({ error: 'cant be empty' })
+  } else if (req.body.longUrl ? req.body.longUrl.includes(' ') : null) {
+    // if (typeof req.body.longUrl !== 'string') {
+    console.log('one')
+    console.log('req.boduy', req.body)
+    res.status(400).send({ error: 'bad ass url no' })
+    // throw new Error('BROKEN')
+    // next()
+  } else {
+    console.log('two', req.body.shortUrl)
+    await Url.findOrCreate({
+      longUrl: req.body.longurUrl,
       shortUrl: req.body.shortUrl,
-      data: 'goodd',
+    }).then((result) => {
+      console.log('three', result)
+      res.status(200).json({ data: 'good' })
     })
-  })
+  }
+  // Url.findOrCreate({
+  //   longUrl: req.body.longUrl,
+  //   shortUrl: req.body.shortUrl,
+  // })
+  //   .then(function (result) {
+  //     console.log('thenn')
+  //     let final = result.doc
+  //     res.status(200).send({
+  //       shortUrl: req.body.shortUrl,
+  //       data: 'goodd',
+  //     })
+  //   })
+  //   .catch((err) => {
+  //     console.log('CATch')
+  //   })
 }
 
 urlRoutes.route('/getAllUrls').get(getAllUrls)

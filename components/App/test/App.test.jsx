@@ -27,38 +27,53 @@ describe('Candidate tests', () => {
 
   describe('', function () {
     it('should create a shortened URL', function (done) {
-      const url = 'www.hello.com'
+      const longUrl = 'www.hello.com'
       chai
         .request('http://localhost:4000')
         .post('/')
         .type('form')
-        .send(url)
+        .send({ longUrl })
         .end((err, res) => {
           expect(err).to.be.null
           expect(res).to.have.status(200)
           expect(res).to.be.json
           expect(res.body.data).to.be.a('string')
           // expect(!!URLPattern.test(res.body.data)).to.be.true
-          expect(url).to.not.equal(res.body.data)
+          expect(longUrl).to.not.equal(res.body.data)
           done()
         })
     })
 
-    // it('should error when receiving a bad url', function (done) {
-    //   chai
-    //     .request('http://localhost:4000')
-    //     .post('/')
-    //     .type('form')
-    //     .send({ url: 'I am a bad URL' })
-    //     .end((err, res) => {
-    //       expect(err).to.be.null
-    //       expect(res).to.have.status(400)
-    //       expect(res).to.be.json
-    //       expect(res.body.error).to.be.a.string
-    //       done()
-    //     })
-    // })
+    it('should error when receiving a bad url', function (done) {
+      chai
+        .request('http://localhost:4000')
+        .post('/')
+        .type('form')
+        .send({ longUrl: 'I am a bad URL' })
+        .end((err, res) => {
+          expect(err).to.be.null
+          expect(res).to.have.status(400)
+          expect(res).to.be.json
+          expect(res.body.error).to.be.a.string
+          done()
+        })
+    })
 
+    it('should error if no x-www-form-urlencoded { url: String } provided', (done) => {
+      const longUrl = 'a.co'
+      chai
+        .request('http://localhost:4000')
+        .post('/')
+        // .type('form')
+        // .send()
+        .end((err, res) => {
+          expect(err).to.be.null
+          expect(res).to.have.status(400)
+          expect(res).to.be.json
+          expect(res.body.error).to.be.a.string
+          done()
+        })
+    })
     // it('should return shortened URL even if shortened url is longer than supplied URL', function (done) {
     //   const url = 'a.co'
     //   chai
@@ -144,20 +159,6 @@ describe('Candidate tests', () => {
     //     expect(url1).not.to.equal(url2)
     //     done()
     //   })
-    // })
-
-    // it('should error if no x-www-form-urlencoded { url: String } provided', function (done) {
-    //   const url = 'a.co'
-    //   chai
-    //     .request(App)
-    //     .post('/data/shorten')
-    //     .end((err, res) => {
-    //       expect(err).to.be.null
-    //       expect(res).to.have.status(400)
-    //       expect(res).to.be.json
-    //       expect(res.body.error).to.be.a.string
-    //       done()
-    //     })
     // })
 
     // it('should return hostname as wf.io', function (done) {
